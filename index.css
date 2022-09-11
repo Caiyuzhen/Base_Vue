@@ -30,6 +30,18 @@ section{
 }
 
 
+img{
+	width: 120px; 
+	height: 100px; 
+	border-radius: 8%;
+}
+
+
 li{
 	margin-bottom: 40px;
+	font-size: 20px;
+	font-weight: bold;
+	display: flex;
+	align-items: center;
+	gap: 20px;
 }

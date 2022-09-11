@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Base Vue</title>
+	<h1>Base Vue</h1>
+	<link rel="stylesheet" href="./index.css">
+	<!-- <script src="https://unpkg.com/vue@3"></script> -->
+	<script src="./Vue.js"></script>
+	<!-- 
+		每次使用 Vue 都需要创建一个实例 
+			创建实例后还需要挂载到 DOM 上  mount() 方法
+
+			{} 对象又个 data() 函数， data（）函数会 return{} 返回一个对象，可以放入初始数据
+
+			利用差值表达式引用数据{{}}
+	-->
+</head>
+<body>
+	<div id="app">
+		<!-- 👛 未购零食 -->
+		<!-- <section v-show="foods.filter(item => !item.purchased).length"> -->
+		<!-- 简化的写法, 抽离出 beforeBuy 表达式 -->
+		<section v-show="beforeBuy">
+			<h2> {{title}} </h2>
+			<ul>
+				<!-- 🔥需要 v-bind:key="food.id" 才不会同时勾选多个-->
+				<!-- v-for="food in foods.filter(item => !item.purchased)"  -->
+				<li 
+					v-for="food in beforeBuy" 
+					v-bind:key="food.id">
+						<img v-bind:src="food.image">
+						<input v-model="food.purchased" type="checkbox">
+						<span>{{ food.name }}</span>
+						<!-- 因为 v-bind 直接可以读取 Vue 里的数据了，所以不用 {{}} 差值表达式-->
+						<span>{{food.purchased}}</span>
+				</li>
+			</ul>
+		</section>
+
+		
+		<!--  💵 已购零食 -->
+		<!-- 🔥 v-show 用数组返回的 length 长度来判断是否该显示 -->
+		<section v-show="foods.filter(item => item.purchased).length">
+			<h2> {{title02}} </h2>
+			<ul>
+				<!-- 🔥 filter 过滤出已 checked 的零食 -->
+				<li 
+					v-for="food in foods.filter(item => item.purchased)"
+					v-bind:key="food.id"
+					>
+						<span>{{ food.name }}</span>
+						<!-- 因为 v-bind 直接可以读取 Vue 里的数据了，所以不用 {{}} 差值表达式-->
+						<img v-bind:src="food.image">
+						<input v-model="food.purchased" type="checkbox">
+						<span>{{food.purchased}}</span>
+				</li>
+			</ul>
+		</section>
+	</div>
+
+	<script>
+		Vue.createApp({
+			data(){//在 data 函数内返回一个对象, 可以存放数据
+				return {
+					title: '👛 Did not purchase',
+					title02: '💵 Purchased Snack List',
+					foods: [
+						{id:1, name: 'bread', image:'./img/bread.png', purchased: false},
+						{id:2, name: 'cake', image:'./img/cake.png', purchased: false},
+						{id:3, name: 'salad', image:'./img/salad.png', purchased: false},
+					]
+				}
+			},
+
+			computed: {
+				beforeBuy() { //未购买的表达式
+					return this.foods.filter(item => !item.purchased)
+				},
+				afterBuy() { //未购买的表达式
+					return this.foods.filter(item => item.purchased)
+				}
+			}
+
+		}).mount('#app')
+	</script>
+</body>
+</html>
