@@ -5,32 +5,27 @@ export default {
 	// 🔥ES6-html 插件, 可以更好的显示 html 代码
 	template: /*html*/
 	`
-		<!-- 👛 未购零食, 在子组件内定义  headline 的 prop 属性, 然后就可以在这个【父组件内】传值（使用父组件的数据）了-->
+		<!-- 👛 未购零食
+				在子组件内定义  headline 的 prop 属性, 然后就可以在这个【父组件内】传值（使用父组件的数据）了
+					⚡️分别访问两组数据:	filtersFn -> afterBuy
+		-->
 		<app-section-list
 			headline="👛 Did not purchase"
-			v-bind:beforeBuyChild="beforeBuy"
+			v-bind:BuyChild="filtersFn.beforeBuy"
 			>
 		</app-section-list>
 
 		
-		<!--  💵 已购零食 -->
-		<!-- 🔥 v-show 用数组返回的 length 长度来判断是否该显示 -->
-		<section v-show="foods.filter(item => item.purchased).length">
-			<h2> {{title02}} </h2>
-			<ul>
-				<!-- 🔥 filter 过滤出已 checked 的零食 -->
-				<li 
-					v-for="food in foods.filter(item => item.purchased)"
-					v-bind:key="food.id"
-					>
-						<span>{{ food.name }}</span>
-						<!-- 因为 v-bind 直接可以读取 Vue 里的数据了，所以不用 {{}} 差值表达式-->
-						<img v-bind:src="food.image">
-						<input v-model="food.purchased" type="checkbox">
-						<span>{{food.purchased}}</span>
-				</li>
-			</ul>
-		</section>
+		<!--  💵 已购零食
+					🔥 v-show 用数组返回的 length 长度来判断是否该显示
+						⚡️分别访问两组数据:	filtersFn -> afterBuy
+		 -->
+		<app-section-list
+			headline="💵 Purchased Snack List"
+			v-bind:BuyChild="filtersFn.afterBuy" 
+			>
+		</app-section-list>
+	
 	`,
 
 		data(){//在 data 函数内返回一个对象, 可以存放数据
@@ -45,12 +40,22 @@ export default {
 			}
 		},
 
+		// 抽离出两个表达式
 		computed: {
-			beforeBuy() { //未购买的表达式
-				return this.foods.filter(item => !item.purchased)
-			},
-			afterBuy() { //未购买的表达式
-				return this.foods.filter(item => item.purchased)
+			// 👇因为子组件的【一个模板】不能【传两个参数】, 所以把两个方法【整合成一个对象】
+			// beforeBuy() { //未购买的表达式
+			// 	return this.foods.filter(item => !item.purchased)
+			// },
+			// afterBuy() { //未购买的表达式
+			// 	return this.foods.filter(item => item.purchased)
+			// }
+			filtersFn(){
+				return{
+					//未购买的表达式
+					beforeBuy: this.foods.filter(item => !item.purchased),
+					//已购买的表达式
+					afterBuy: this.foods.filter(item => item.purchased)
+				}
 			}
 		}
 }

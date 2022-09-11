@@ -79,7 +79,7 @@
 				beforeBuy() { //未购买的表达式
 					return this.foods.filter(item => !item.purchased)
 				},
-				afterBuy() { //未购买的表达式
+				afterBuy() { //已购买的表达式
 					return this.foods.filter(item => item.purchased)
 				}
 			}
