@@ -5,7 +5,6 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Base Vue</title>
-	<h1>Base Vue</h1>
 	<link rel="stylesheet" href="./index.css">
 	<!-- <script src="https://unpkg.com/vue@3"></script> -->
 	<script src="./Vue.js"></script>
@@ -19,11 +18,14 @@
 	-->
 </head>
 <body>
-	<div id="app"></div>
+	<div class="container">
+		<h1>Base Vue</h1>
+		<div id="app"></div>
 
-	<script type="module">
-		import App from '/components/App.js'
-		Vue.createApp(App).mount('#app')
-	</script>
+			<script type="module">
+				import App from '/components/App.js'
+				Vue.createApp(App).mount('#app')
+			</script>
+	</div>
 </body>
 </html>
