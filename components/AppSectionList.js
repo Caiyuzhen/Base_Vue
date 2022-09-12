@@ -5,18 +5,18 @@ export default {
 		<!-- <section v-show="foods.filter(item => !item.purchased).length"> -->
 		<!-- 简化的写法, 抽离出 beforeBuy 表达式 -->
 		<!-- 连接到父组件的数据后, 🔥用 {{}} 差值表达式来引用父组件传入的数据！！-->
+		
 		<section v-show="buyChild.length">
 			<h2> {{headline}} </h2>
 			<ul>
 				<!-- 🔥需要 v-bind:key="food.id" 才不会同时勾选多个-->
 				<!-- v-for="food in foods.filter(item => !item.purchased)"  -->
-				<li v-for="food in buyChild" 
-					v-bind:key="food.id">
-						<img v-bind:src="food.image">
-						<input v-model="food.purchased" type="checkbox">
-						<span>{{ food.name }}</span>
+				<li v-for="foods in buyChild"  v-bind:key="foods.id">
+						<img v-bind:src="foods.image">
+						<input v-model="foods.purchased" type="checkbox">
+						<span>{{ foods.name }}</span>
 						<!-- 因为 v-bind 直接可以读取 Vue 里的数据了，所以不用 {{}} 差值表达式-->
-						<span>{{food.purchased}}</span>
+						<span>{{foods.purchased}}</span>
 				</li>
 			</ul>
 		</section>

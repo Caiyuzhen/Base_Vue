@@ -26,6 +26,8 @@ export default {
 		v-on:			//绑定事件
 		v-for:			//循环获取数据
 		v-show:			//控制元素的显示与隐藏
+		v-if:			//用来判断条件
+		$emit('fnName', data)	//🔥向全局暴露一个 add 事件, 以及 newFood 这个数据, 用来添加数据
 
 
 	⚡️Vue 常见 api 的缩写
